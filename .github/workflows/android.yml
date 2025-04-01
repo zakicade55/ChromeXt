@@ -20,7 +20,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Build debug
-      run: ./gradlew app:assembleDebug
+      run: ./gradlew app:assembleDebugs is 
         
     - name: Build release
       if: ${{ ( github.event_name != 'pull_request' && github.ref == 'refs/heads/master' ) || github.ref_type == 'tag' }}
@@ -40,11 +40,6 @@ jobs:
       id: sign_app
       with:
         releaseDirectory: app/build/outputs/apk/release
-        signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-        alias: ${{ secrets.ALIAS }}
-        keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-        keyPassword: ${{ secrets.KEY_PASSWORD }}
-
     - name: Upload debug build
       uses: actions/upload-artifact@main
       with:
